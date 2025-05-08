@@ -1,0 +1,42 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Files created by the MicroPython REPL or editor tools
+*.mpy
+*.dfu
+*.elf
+*.hex
+*.bin
+
+# Thonny-specific files (if using Thonny)
+.thonny/
+*.pyc
+
+# VSCode settings (if using VSCode)
+.vscode/
+
+# Files uploaded to the Pico
+*.uf2
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*~
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Data files
+*.json
+*.csv
+*.txt
+
+# Keep package.json
+!package.json
+
+# Environment files
+.env

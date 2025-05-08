@@ -1,14 +1,24 @@
 {
   "urls": [
-    ["test.py", "http://localhost:8000/test.py"],
-    ["lib/filefifo.py", "http://localhost:8000/pico-lib/filefifo.py"],	
+    ["lib/filefifo.py", "http://localhost:8000/pico-lib/filefifo.py"],
     ["lib/fifo.py", "http://localhost:8000/pico-lib/fifo.py"],
     ["lib/piotimer.py", "http://localhost:8000/pico-lib/piotimer.py"],
     ["lib/led.py", "http://localhost:8000/pico-lib/led.py"],
     ["lib/ssd1306.mpy", "http://localhost:8000/pico-lib/ssd1306.mpy"],
-    ["lib/umqtt/simple.mpy", "http://localhost:8000/pico-lib/umqtt/simple.mpy"]
+    ["lib/umqtt/simple.mpy", "http://localhost:8000/pico-lib/umqtt/simple.mpy"],
+    ["main.py", "http://localhost:8000/main.py"],
+    ["measurement.py", "http://localhost:8000/measurement.py"],
+    ["menu.py", "http://localhost:8000/menu.py"],
+    ["network_handlers.py", "http://localhost:8000/network_handlers.py"],
+    ["utils", "http://localhost:8000/utils.py"],
+    ["capture_history", "http://localhost:8000/capture_history.py"],
+    ["components/Display.py", "http://localhost:8000/Display.py"],
+    ["components/Encoder.py", "http://localhost:8000/Encoder.py"],
+    ["components/Sensor.py", "http://localhost:8000/Sensor.py"],
+    ["components/Switch.py", "http://localhost:8000/Switch.py"]
   ],
   "deps": [
   ],
   "version": "0.1"
 }
+
