@@ -17,7 +17,7 @@ class NetworkHandler:
         wlan.active(True)
         wlan.connect(self.SSID, self.PASSWORD)
         
-        max_wait = 10 # wait 10 seconds to connect
+        max_wait = 5 # wait 10 seconds to connect
         while max_wait > 0:
             if wlan.isconnected():
                 print("Connected to WLAN")
@@ -38,7 +38,7 @@ class NetworkHandler:
             "Continuing", "offline",
         ])
         
-        time.sleep(5)
+        time.sleep(3)
 
         return wlan.isconnected()
 

@@ -97,11 +97,11 @@ class LiveHRMeasurement(BaseMeasurement):
             "Press to stop",
         ])
 
-    def cleanup(self, samples, ppi):
+    def cleanup(self, samples, ppi, final_bpm):
         self.display.centered_texts([
             "Final HR",
             " ",
-            f"{round(60000 / average(ppi))} BPM" if ppi else "---",
+            f"{final_bpm} BPM" if ppi else "---",
             " ",
             "Press to exit",
         ])
@@ -110,6 +110,11 @@ class LiveHRMeasurement(BaseMeasurement):
         ppi.clear()
         
     def run(self):
+        ROLLING_WINDOW_SIZE = 100
+        GRAPH_REFRESH_INTERVAL_MS = 25
+        GRAPH_X_SCALE = 2
+        VISIBLE_GRAPH_WIDTH = self.display.width // GRAPH_X_SCALE
+        rolling_window = []
         samples = []
         ppi = []
         heart_rate = 0
@@ -123,26 +128,41 @@ class LiveHRMeasurement(BaseMeasurement):
         print("Live HR recording started")
 
         last_bpm_update = last_display_refresh = time.ticks_ms()
+        last_graph_refresh = time.ticks_ms()
 
         try:
+            self.display.clear()
             while not self.switch.single_press():
                 self.collect_samples(samples)
-
+                
                 now = time.ticks_ms()
+                
+                # draw the ppg
+                if time.ticks_diff(now, last_graph_refresh) > GRAPH_REFRESH_INTERVAL_MS and samples:
+                    new_val = samples[-1]
+                    rolling_window.append(new_val)
+                    if len(rolling_window) > VISIBLE_GRAPH_WIDTH:
+                        rolling_window.pop(0)
 
+                    min_val = min(rolling_window)
+                    max_val = max(rolling_window)
+
+                    self.display.draw_ppg_graph(new_val, min_val, max_val)
+                    
                 if self.should_update_bpm(now, last_bpm_update, samples):
                     new_hr, ppi = self.update_bpm(samples, ppi)
                     if new_hr:
                         heart_rate = new_hr
                         last_bpm_update = now
 
+                # update heading text
                 if time.ticks_diff(now, last_display_refresh) > self.DISPLAY_REFRESH_INTERVAL_MS:
-                    self.display_heart_rate(heart_rate)
+                    self.display.heading("HR", f"{heart_rate} BPM" if heart_rate else "---", clear_only_heading = True)
                     last_display_refresh = now
 
         finally:
             self.fifo.recording = False
-            self.cleanup(samples, ppi)
+            self.cleanup(samples, ppi, heart_rate)
             print("Live HR recording stopped")
             
 class AnalysisMeasurement(BaseMeasurement):

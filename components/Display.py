@@ -6,6 +6,10 @@ class Display(SSD1306_I2C):
         super().__init__(*args, **kwargs)
         self.line_spacing = line_spacing
         
+        # ppg position cache
+        self._ppg_x = 0
+        self._ppg_prev_y = self.height // 2
+        
     def clear(self):
         self.fill(0)      
     
@@ -49,10 +53,13 @@ class Display(SSD1306_I2C):
 
         self.show()
         
-    def heading(self, left_text, right_text, y = 0, clear = True):
+    def heading(self, left_text, right_text, y = 0, clear = True, clear_only_heading = False):
         """display a text on the top of the screen. supports 2 texts, 1 on the left and 1 on the right"""
         if clear:
-            self.clear()
+            if clear_only_heading:
+                self.fill_rect(0, y, self.width, 10, 0)
+            else:
+                self.clear()
             
         self.text(left_text, 0, y, 1)
         right_x = self.width - (len(right_text) * 8)
@@ -75,3 +82,31 @@ class Display(SSD1306_I2C):
             self.text(line, text_x_offset, y, 1)
 
         self.show()
+        
+    def draw_ppg_graph(self, new_val, min_val, max_val):
+        graph_top = 14
+        graph_bottom = 58
+        graph_height = graph_bottom - graph_top
+
+        if max_val == min_val:
+            return 
+
+        scale_factor = graph_height / (max_val - min_val)
+        y = int(graph_bottom - (new_val - min_val) * scale_factor)
+        
+        if y <= graph_top:
+            y = graph_top + 1  # Prevent drawing at the top edge
+        elif y >= graph_bottom:
+            y = graph_bottom - 1  # Prevent drawing at the bottom edge
+
+        self.fill_rect(self._ppg_x, graph_top, 1, graph_height, 0)
+
+        if self._ppg_x != 0:
+            self.line(self._ppg_x - 1, self._ppg_prev_y, self._ppg_x, y, 1)
+
+        self._ppg_x = (self._ppg_x + 1) % self.width
+        self._ppg_prev_y = y
+
+        self.show()
+
+
