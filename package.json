@@ -10,7 +10,7 @@
     ["measurement.py", "http://localhost:8000/measurement.py"],
     ["menu.py", "http://localhost:8000/menu.py"],
     ["network_handlers.py", "http://localhost:8000/network_handlers.py"],
-    ["utils", "http://localhost:8000/utils.py"],
+    ["utils.py", "http://localhost:8000/utils.py"],
     ["capture_history", "http://localhost:8000/capture_history.py"],
     ["components/Display.py", "http://localhost:8000/Display.py"],
     ["components/Encoder.py", "http://localhost:8000/Encoder.py"],
