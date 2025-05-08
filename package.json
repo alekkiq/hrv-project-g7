@@ -12,10 +12,10 @@
     ["network_handlers.py", "http://localhost:8000/network_handlers.py"],
     ["utils.py", "http://localhost:8000/utils.py"],
     ["capture_history.py", "http://localhost:8000/capture_history.py"],
-    ["components/Display.py", "http://localhost:8000/Display.py"],
-    ["components/Encoder.py", "http://localhost:8000/Encoder.py"],
-    ["components/Sensor.py", "http://localhost:8000/Sensor.py"],
-    ["components/Switch.py", "http://localhost:8000/Switch.py"]
+    ["components/Display.py", "http://localhost:8000/components/Display.py"],
+    ["components/Encoder.py", "http://localhost:8000/components/Encoder.py"],
+    ["components/Sensor.py", "http://localhost:8000/components/Sensor.py"],
+    ["components/Switch.py", "http://localhost:8000/components/Switch.py"]
   ],
   "deps": [
   ],
