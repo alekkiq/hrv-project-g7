@@ -19,6 +19,10 @@ class History:
         self.total_pages = self.get_page_count()
         self.page = 0
 
+        # create the history directory if it does not exist
+        if not os.path.exists(self.history_dir):
+            os.makedirs(self.history_dir, exist_ok=True)
+
     def load_entries(self):
         try:
             files = sorted(os.listdir(self.history_dir), reverse=True)
